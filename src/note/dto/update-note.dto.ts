@@ -1,5 +1,6 @@
-import { IsEnum, IsOptional, IsString } from "class-validator";
+import { IsEmpty, IsEnum, IsOptional, IsString } from "class-validator";
 import { Mood } from "../schemas/note.schema";
+import { User } from "../../auth/schemas/user.schema";
 
 
 export class UpdateNoteDto{
@@ -20,4 +21,7 @@ export class UpdateNoteDto{
     //@IsEnum(Mood, {message: 'Please choose correct Mood'})
     readonly mood: Mood
     readonly specialnote: string;
+
+    @IsEmpty({ message: 'You cannot pass user id' })
+    readonly user: User;
 }

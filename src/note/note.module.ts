@@ -3,9 +3,10 @@ import { NoteController } from './note.controller';
 import { NoteService } from './note.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { NoteSchema } from './schemas/note.schema';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'Note', schema: NoteSchema }])],
+  imports: [AuthModule, MongooseModule.forFeature([{ name: 'Note', schema: NoteSchema }])],
   controllers: [NoteController],
   providers: [NoteService],
 })
