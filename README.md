@@ -1,73 +1,99 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+TakeNote is a NestJs backend application built with NestJS to manage notes. It provides RESTful APIs for performing CRUD operations on notes and implements authentication to secure the APIs using JWT tokens.
 
 ## Installation
 
-```bash
-$ npm install
+1. Clone the repository:
+
+git clone https://github.com/Itsayush30/TakeNote_Nestjs.git
+
+2. Navigate to the project directory: `cd TakeNote_Nestjs.git`
+
+3. Install dependencies: `npm install`
+
+## Configuration
+
+1. Create a .env file in the root directory of the project.
+
+2. Add the following environment variables to the .env file:
+
+`JWT_SECRET=your-secret-key`
+`DATABASE_URL=your-database-connection-url`
+
+3. Replace your-secret-key with a secret key for JWT token generation and your-database-connection-url with the URL of your MongoDB database.
+
+## Usage
+
+To run the application in development mode: `npm run start:dev`
+
+This will start the server in watch mode using nodemon, which automatically restarts the server when changes are detected.
+
+## APIs
+
+The following RESTful APIs are available:
+
+1. POST /auth/signup: Register a new user.
+2. POST /auth/login: Login with email and password to obtain a JWT token.
+3. GET /notes: Retrieve all notes.
+4. GET /notes/:id: Retrieve a single note by ID.
+5. POST /notes/new: Create a new note.
+6. PUT /notes/:id: Update a note by ID.
+7. DELETE /notes/:id: Delete a note by ID.
+
+## Authentication
+
+JWT (JSON Web Tokens) is used for authentication. To access protected APIs, include the JWT token in the Authorization header of the request.
+
+Example: `Authorization: Bearer your-jwt-token`
+
+
+## Deployment to AWS Lambda  Serverless Framework
+
+1. Install the Serverless Framework : `npm install --save-dev serverless`
+
+2. Add Serverless Framework configuration to your package.json:
+```
+"serverless": {
+  "service": "TakeNote_Nestjs",
+  "provider": {
+    "name": "aws",
+    "runtime": "nodejs14.x",
+    "stage": "dev",
+    "region": "us-east-1",
+    "memorySize": 512,
+    "timeout": 10
+  },
+  "functions": {
+    "app": {
+      "handler": "dist/main.handler",
+      "events": [
+        {
+          "httpApi": "*"
+        }
+      ]
+    }
+  } 
+}
 ```
 
-## Running the app
 
-```bash
-# development
-$ npm run start
+3. Ensure you have AWS credentials configured locally.Then run:
 
-# watch mode
-$ npm run start:dev
+    ```bash
+    npx serverless deploy
+    ```
 
-# production mode
-$ npm run start:prod
-```
+4. Access the deployed API endpoints:**
 
-## Test
+    Serverless Framework will provide you with the API Gateway URL after deployment. You can use this URL to access your deployed API.
 
-```bash
-# unit tests
-$ npm run test
 
-# e2e tests
-$ npm run test:e2e
+## Dependencies
 
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+1. NestJS: A progressive Node.js framework for building efficient, reliable, and scalable server-side applications.
+2. Mongoose: Elegant MongoDB object modeling for Node.js.
+3. Passport: Authentication middleware for Node.js.
+4. JWT: JSON Web Token implementation for Node.js.
