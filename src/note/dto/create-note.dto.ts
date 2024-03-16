@@ -24,6 +24,7 @@ export class CreateNoteDto{
     readonly mood: Mood
     readonly specialnote: string;
 
-    @IsEmpty({ message: 'You cannot pass user id' })
+    
+   
     readonly user: User;
 }

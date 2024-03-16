@@ -2,7 +2,6 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { Note } from './schemas/note.schema';
-import { User } from '../auth/schemas/user.schema';
 
 @Injectable()
 export class NoteService {
@@ -16,7 +15,7 @@ export class NoteService {
         return notes;
     }
  
-    async create(note: Note,user:User): Promise<Note>{
+    async create(note: Note): Promise<Note>{
         const res = await this.noteModel.create(note)
         return res
 
@@ -31,17 +30,17 @@ export class NoteService {
           }
       
 
-        const book = await this.noteModel.findById(id);
+        const note = await this.noteModel.findById(id);
     
-        if (!book) {
-          throw new NotFoundException('Book not found.');
+        if (!note) {
+          throw new NotFoundException('Note not found.');
         }
     
-        return book;
+        return note;
       }
     
-      async updateById(id: string, book: Note): Promise<Note> {
-        return await this.noteModel.findByIdAndUpdate(id, book, {
+      async updateById(id: string, note: Note): Promise<Note> {
+        return await this.noteModel.findByIdAndUpdate(id, note, {
           new: true,
           runValidators: true,
         });
@@ -50,5 +49,10 @@ export class NoteService {
       async deleteById(id: string): Promise<Note> {
         return await this.noteModel.findByIdAndDelete(id);
       }
+
+      async  findByUserId(userId: string): Promise<Note[]> {
+        return await this.noteModel.find({ user: userId }).exec();
+    }
+
 
 }
